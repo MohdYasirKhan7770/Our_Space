@@ -1,0 +1,97 @@
+/* ═══════════════════════════════════════════════════════════════
+   REASONS I LOVE YOU
+   ═══════════════════════════════════════════════════════════════ */
+
+.reasons {
+  max-width: var(--max-width-text);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reasons__card-wrapper {
+  width: 100%;
+  max-width: 440px;
+  min-height: 280px;
+  perspective: 800px;
+  margin-bottom: var(--sp-lg);
+}
+
+.reasons__card {
+  width: 100%;
+  min-height: 280px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-xl) var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+  user-select: none;
+}
+
+.reasons__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bg-glass-border-hover);
+  box-shadow: 0 12px 48px var(--glow-rose);
+}
+
+.reasons__number {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-rose);
+  margin-bottom: var(--sp-lg);
+}
+
+.reasons__text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  color: var(--text-primary);
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.reasons__text.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reasons__hint {
+  margin-top: var(--sp-lg);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+}
+
+.reasons__text.is-revealed ~ .reasons__hint {
+  opacity: 1;
+}
+
+.reasons__next {
+  margin-top: var(--sp-md);
+}
+
+.reasons__counter {
+  margin-top: var(--sp-md);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
