@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Meta -->
+  <title>Our Little Universe</title>
+  <meta name="description" content="A private corner of the internet, built with love.">
+  <meta name="theme-color" content="#0a050d">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/components/nav.css">
+  <link rel="stylesheet" href="src/css/components/hero.css">
+  <link rel="stylesheet" href="src/css/components/timeline.css">
+  <link rel="stylesheet" href="src/css/components/gallery.css">
+  <link rel="stylesheet" href="src/css/components/reasons.css">
+  <link rel="stylesheet" href="src/css/components/songs.css">
+  <link rel="stylesheet" href="src/css/components/letters.css">
+  <link rel="stylesheet" href="src/css/components/future.css">
+  <link rel="stylesheet" href="src/css/components/secrets.css">
+</head>
+<body>
+
+  <!-- Background Particle Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__logo">Our Space</div>
+    <ul class="nav__links">
+      <li><a href="#universe" class="nav__link">Universe</a></li>
+      <li><a href="#story" class="nav__link">Story</a></li>
+      <li><a href="#memories" class="nav__link">Memories</a></li>
+      <li><a href="#reasons" class="nav__link">Reasons</a></li>
+      <li><a href="#songs" class="nav__link">Songs</a></li>
+      <li><a href="#letters" class="nav__link">Letters</a></li>
+      <li><a href="#birthday" class="nav__link">Birthday</a></li>
+      <li><a href="#future" class="nav__link">Future</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="nav__mobile-overlay">
+    <ul class="nav__mobile-links">
+      <li><a href="#universe" class="nav__mobile-link">Our Universe</a></li>
+      <li><a href="#story" class="nav__mobile-link">Our Story</a></li>
+      <li><a href="#memories" class="nav__mobile-link">Memories</a></li>
+      <li><a href="#reasons" class="nav__mobile-link">Reasons</a></li>
+      <li><a href="#songs" class="nav__mobile-link">Songs</a></li>
+      <li><a href="#letters" class="nav__mobile-link">Letters</a></li>
+      <li><a href="#birthday" class="nav__mobile-link">Birthday</a></li>
+      <li><a href="#future" class="nav__mobile-link">Our Future</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero__content">
+      <div id="heroLine1" class="hero__line1"></div>
+      <div id="heroLine2" class="hero__line2"></div>
+      <a href="#universe" id="heroCta" class="btn btn--primary hero__cta"></a>
+    </div>
+    <div class="hero__scroll-hint">
+      <div class="hero__scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- Our Universe (Home / Counter) -->
+  <section id="universe" class="section universe">
+    <h2 class="section__title reveal reveal--scale">Our Universe</h2>
+    <div class="section__divider reveal"></div>
+    
+    <div class="universe__photo-wrap reveal">
+      <img id="universePhoto" src="" alt="Us" class="universe__photo" loading="lazy">
+    </div>
+    
+    <p id="universeMessage" class="universe__message reveal"></p>
+    
+    <div class="counter reveal">
+      <div class="counter__unit"><span id="countYears" class="counter__value">00</span><span class="counter__label">Years</span></div>
+      <div class="counter__unit"><span id="countMonths" class="counter__value">00</span><span class="counter__label">Months</span></div>
+      <div class="counter__unit"><span id="countDays" class="counter__value">00</span><span class="counter__label">Days</span></div>
+      <div class="counter__unit"><span id="countHours" class="counter__value">00</span><span class="counter__label">Hours</span></div>
+      <div class="counter__unit"><span id="countMins" class="counter__value">00</span><span class="counter__label">Mins</span></div>
+      <div class="counter__unit"><span id="countSecs" class="counter__value">00</span><span class="counter__label">Secs</span></div>
+    </div>
+  </section>
+
+  <!-- Our Story (Timeline) -->
+  <section id="story" class="section">
+    <h2 class="section__title reveal reveal--scale">Our Story</h2>
+    <div class="section__divider reveal"></div>
+    <div id="timelineContainer" class="timeline">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- Memories (Gallery) -->
+  <section id="memories" class="section section--full">
+    <h2 class="section__title reveal reveal--scale">Memories</h2>
+    <div class="section__subtitle reveal">Some moments deserve to be kept forever.</div>
+    <div class="section__divider reveal"></div>
+    
+    <div class="gallery">
+      <div id="galleryGrid" class="gallery__grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasons I Love You -->
+  <section id="reasons" class="section">
+    <h2 class="section__title reveal reveal--scale">Reasons</h2>
+    <div class="section__divider reveal"></div>
+    
+    <div class="reasons">
+      <div id="reasonCard" class="reasons__card-wrapper reveal">
+        <div class="reasons__card">
+          <div id="reasonNum" class="reasons__number"></div>
+          <div id="reasonText" class="reasons__text"></div>
+          <div class="reasons__hint">tap to reveal</div>
+        </div>
+      </div>
+      <button id="nextReasonBtn" class="btn btn--ghost reasons__next reveal">Another reason →</button>
+      <div id="reasonCounter" class="reasons__counter reveal"></div>
+    </div>
+  </section>
+
+  <!-- Our Songs -->
+  <section id="songs" class="section">
+    <h2 class="section__title reveal reveal--scale">Our Songs</h2>
+    <div class="section__subtitle reveal">The soundtrack to us.</div>
+    <div class="section__divider reveal"></div>
+    
+    <div id="songsContainer" class="songs">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- Letters -->
+  <section id="letters" class="section">
+    <h2 class="section__title reveal reveal--scale">Letters</h2>
+    <div class="section__subtitle reveal">Words for when you need them.</div>
+    <div class="section__divider reveal"></div>
+    
+    <div class="letters">
+      <div id="lettersGrid" class="letters__grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Birthday -->
+  <section id="birthday" class="section">
+    <h2 class="section__title reveal reveal--scale">Our Birthday</h2>
+    <div class="section__divider reveal"></div>
+    
+    <div class="birthday-intro">
+      <p id="birthdayIntro" class="birthday-intro__text reveal"></p>
+      <button id="birthdayCta" class="btn btn--primary reveal"></button>
+    </div>
+  </section>
+
+  <!-- Our Future -->
+  <section id="future" class="section">
+    <h2 class="section__title reveal reveal--scale">Our Future</h2>
+    <div class="section__divider reveal"></div>
+    
+    <div class="future">
+      <div id="futureTabs" class="future__tabs reveal">
+        <!-- Populated by JS -->
+      </div>
+      <div id="futureGrid" class="future__grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Closing -->
+  <footer class="closing">
+    <div id="closingLine1" class="closing__line1 reveal reveal--scale"></div>
+    <div id="closingNames" class="closing__names reveal"></div>
+    <div id="closingLine2" class="closing__line2 reveal"></div>
+    <div id="footerHeart" class="closing__heart reveal">🤍</div>
+  </footer>
+
+  <!-- Lightbox Modal (Gallery) -->
+  <div id="lightbox" class="lightbox">
+    <button id="lightboxClose" class="lightbox__close" aria-label="Close lightbox">×</button>
+    <div class="lightbox__container">
+      <img id="lightboxImg" src="" alt="" class="lightbox__img">
+      <div id="lightboxCaption" class="lightbox__caption"></div>
+      <button id="lightboxPrev" class="lightbox__nav lightbox__nav--prev" aria-label="Previous image">‹</button>
+      <button id="lightboxNext" class="lightbox__nav lightbox__nav--next" aria-label="Next image">›</button>
+      <div id="lightboxCounter" class="lightbox__counter"></div>
+    </div>
+  </div>
+
+  <!-- Letter Modal -->
+  <div id="letterModal" class="letter-modal">
+    <div class="letter-modal__content">
+      <button id="letterClose" class="letter-modal__close" aria-label="Close letter">×</button>
+      <div id="letterContent">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Secret Overlay (Konami / Clicks) -->
+  <div id="secretOverlay" class="secret-overlay">
+    <div id="secretText" class="secret-overlay__text"></div>
+  </div>
+
+  <!-- Secret Star Tooltip -->
+  <div id="secretStarTooltip" class="secret-star-tooltip"></div>
+
+  <!-- Main Entry Script (Module) -->
+  <script type="module" src="src/js/main.js"></script>
+</body>
+</html>
