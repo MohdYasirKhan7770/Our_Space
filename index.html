@@ -7,7 +7,11 @@
   <!-- SEO & Meta -->
   <title>Our Little Universe</title>
   <meta name="description" content="A private corner of the internet, built with love.">
-  <meta name="theme-color" content="#0a050d">
+  <meta name="theme-color" content="#150f0c">
+  
+  <!-- Leaflet.js (for interactive map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   
   <!-- CSS -->
   <link rel="stylesheet" href="src/css/main.css">
@@ -20,11 +24,16 @@
   <link rel="stylesheet" href="src/css/components/letters.css">
   <link rel="stylesheet" href="src/css/components/future.css">
   <link rel="stylesheet" href="src/css/components/secrets.css">
+  <link rel="stylesheet" href="src/css/components/map.css">
+  <link rel="stylesheet" href="src/css/components/ambient.css">
 </head>
 <body>
 
   <!-- Background Particle Canvas -->
   <canvas id="particles-canvas"></canvas>
+
+  <!-- Custom Cursor Glow -->
+  <div id="cursorGlow" class="cursor-glow"></div>
 
   <!-- Navigation -->
   <nav class="nav">
@@ -33,10 +42,10 @@
       <li><a href="#universe" class="nav__link">Universe</a></li>
       <li><a href="#story" class="nav__link">Story</a></li>
       <li><a href="#memories" class="nav__link">Memories</a></li>
+      <li><a href="#places" class="nav__link">Places</a></li>
       <li><a href="#reasons" class="nav__link">Reasons</a></li>
       <li><a href="#songs" class="nav__link">Songs</a></li>
       <li><a href="#letters" class="nav__link">Letters</a></li>
-      <li><a href="#birthday" class="nav__link">Birthday</a></li>
       <li><a href="#future" class="nav__link">Future</a></li>
     </ul>
     <button class="nav__hamburger" aria-label="Menu">
@@ -50,6 +59,7 @@
       <li><a href="#universe" class="nav__mobile-link">Our Universe</a></li>
       <li><a href="#story" class="nav__mobile-link">Our Story</a></li>
       <li><a href="#memories" class="nav__mobile-link">Memories</a></li>
+      <li><a href="#places" class="nav__mobile-link">Places</a></li>
       <li><a href="#reasons" class="nav__mobile-link">Reasons</a></li>
       <li><a href="#songs" class="nav__mobile-link">Songs</a></li>
       <li><a href="#letters" class="nav__mobile-link">Letters</a></li>
@@ -66,6 +76,7 @@
       <a href="#universe" id="heroCta" class="btn btn--primary hero__cta"></a>
     </div>
     <div class="hero__scroll-hint">
+      <div class="hero__scroll-heart">♡</div>
       <div class="hero__scroll-line"></div>
     </div>
   </header>
@@ -106,9 +117,30 @@
     <div class="section__subtitle reveal">Some moments deserve to be kept forever.</div>
     <div class="section__divider reveal"></div>
     
+    <!-- Controls: Filters + Search + Surprise Me -->
+    <div class="memory-controls reveal">
+      <div id="memoryFilters" class="memory-filters">
+        <!-- Populated by JS -->
+      </div>
+      <input type="text" id="memorySearch" class="memory-search" placeholder="Search memories..." aria-label="Search memories" />
+      <button id="surpriseBtn" class="surprise-btn">✨ Surprise me</button>
+    </div>
+
     <div class="gallery">
       <div id="galleryGrid" class="gallery__grid">
         <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Places (Map) -->
+  <section id="places" class="section">
+    <h2 class="section__title reveal reveal--scale">Our Places</h2>
+    <div class="section__subtitle reveal">The map of us.</div>
+    <div class="section__divider reveal"></div>
+    <div class="map-wrapper reveal">
+      <div id="mapContainer" class="map-container">
+        <!-- Populated by JS (Leaflet) -->
       </div>
     </div>
   </section>
@@ -167,16 +199,63 @@
   </section>
 
   <!-- Our Future -->
-  <section id="future" class="section">
+  <section id="future" class="section section--full">
     <h2 class="section__title reveal reveal--scale">Our Future</h2>
+    <div class="section__subtitle reveal">Everything we're building together.</div>
     <div class="section__divider reveal"></div>
-    
-    <div class="future">
-      <div id="futureTabs" class="future__tabs reveal">
-        <!-- Populated by JS -->
+
+    <div class="future-wrapper">
+      <!-- Sub-navigation -->
+      <div class="future-nav reveal">
+        <button class="future-nav__btn is-active" data-section="futureBucketList">🌱 Bucket List</button>
+        <button class="future-nav__btn" data-section="futureCountdown">⏳ Countdown</button>
+        <button class="future-nav__btn" data-section="futureLettersSection">💌 Future Letters</button>
+        <button class="future-nav__btn" data-section="futureDreams">💭 Dreams</button>
       </div>
-      <div id="futureGrid" class="future__grid">
-        <!-- Populated by JS -->
+
+      <!-- Bucket List -->
+      <div id="futureBucketList" class="future-section is-active">
+        <div class="bucket-list-layout">
+          <div>
+            <div class="bucket-list__header">
+              <div class="bucket-progress">
+                <div id="bucketProgress" class="bucket-progress__fill"></div>
+              </div>
+              <div id="bucketProgressText" class="bucket-progress__text">0% complete</div>
+            </div>
+            <div id="bucketListContainer" class="bucket-list__items">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="growth-tree-wrapper">
+            <div id="growthTree"></div>
+            <div class="growth-tree-label">Our growth</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div id="futureCountdown" class="future-section">
+        <div id="countdownContainer" class="countdown">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Future Letters -->
+      <div id="futureLettersSection" class="future-section">
+        <div id="futureLettersContainer" class="future-letters">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Dreams / Promises / Goals -->
+      <div id="futureDreams" class="future-section">
+        <div id="futureTabs" class="future__tabs reveal">
+          <!-- Populated by JS -->
+        </div>
+        <div id="futureGrid" class="future__grid">
+          <!-- Populated by JS -->
+        </div>
       </div>
     </div>
   </section>
@@ -218,6 +297,16 @@
 
   <!-- Secret Star Tooltip -->
   <div id="secretStarTooltip" class="secret-star-tooltip"></div>
+
+  <!-- Ambient Music Toggle -->
+  <button id="ambientToggle" class="ambient-toggle" aria-label="Toggle ambient music" title="Toggle ambient music">
+    <div class="ambient-toggle__bars">
+      <div class="ambient-toggle__bar"></div>
+      <div class="ambient-toggle__bar"></div>
+      <div class="ambient-toggle__bar"></div>
+      <div class="ambient-toggle__bar"></div>
+    </div>
+  </button>
 
   <!-- Main Entry Script (Module) -->
   <script type="module" src="src/js/main.js"></script>

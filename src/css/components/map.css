@@ -1,0 +1,104 @@
+/* ═══════════════════════════════════════════════════════════════
+   MAP (Our Places)
+   ═══════════════════════════════════════════════════════════════ */
+
+.map-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--bg-glass-border);
+  background: var(--bg-glass);
+}
+
+.map-container {
+  width: 100%;
+  height: 450px;
+  background: var(--bg-surface);
+}
+
+/* Custom heart pin */
+.map-pin {
+  color: var(--accent-rose);
+  filter: drop-shadow(0 2px 6px var(--glow-rose-strong));
+  transition: transform var(--duration-fast) var(--ease-spring);
+  background: none !important;
+  border: none !important;
+}
+
+.map-pin:hover {
+  transform: scale(1.2);
+}
+
+/* Popup styling */
+.map-popup-wrapper .leaflet-popup-content-wrapper {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 0;
+}
+
+.map-popup-wrapper .leaflet-popup-content {
+  margin: 0;
+  min-width: 200px;
+}
+
+.map-popup-wrapper .leaflet-popup-tip {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+}
+
+.map-popup-wrapper .leaflet-popup-close-button {
+  color: var(--text-muted) !important;
+  font-size: 18px !important;
+  top: 6px !important;
+  right: 8px !important;
+}
+
+.map-popup__img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.map-popup__body {
+  padding: 0.8rem 1rem;
+}
+
+.map-popup__caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+
+.map-popup__place {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.map-popup__date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-container {
+    height: 260px;
+  }
+}

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   LETTERS (Envelope Interactions)
+   LETTERS (Envelope Interactions) — Warm + Handwritten Font
    ═══════════════════════════════════════════════════════════════ */
 
 .letters {
@@ -29,13 +29,13 @@
 }
 
 .envelope:hover .envelope__visual {
-  transform: scale(1.03);
+  transform: scale(1.03) rotateZ(-1deg);
 }
 
 .envelope__body {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, hsl(340, 25%, 20%) 0%, hsl(340, 30%, 12%) 100%);
+  background: linear-gradient(160deg, hsl(20, 18%, 18%) 0%, hsl(20, 15%, 12%) 100%);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -46,7 +46,7 @@
   left: 0;
   width: 100%;
   height: 55%;
-  background: linear-gradient(160deg, hsl(340, 25%, 25%) 0%, hsl(340, 30%, 16%) 100%);
+  background: linear-gradient(160deg, hsl(20, 18%, 22%) 0%, hsl(20, 15%, 15%) 100%);
   clip-path: polygon(0 0, 50% 65%, 100% 0);
   transform-origin: top center;
   transition: transform 0.8s var(--ease-out);
@@ -64,7 +64,7 @@
   left: 0;
   width: 100%;
   height: 55%;
-  background: linear-gradient(160deg, hsl(340, 30%, 16%) 0%, hsl(340, 30%, 12%) 100%);
+  background: linear-gradient(160deg, hsl(20, 15%, 15%) 0%, hsl(20, 15%, 11%) 100%);
   clip-path: polygon(0 100%, 50% 35%, 100% 100%);
   z-index: 2;
 }
@@ -75,7 +75,7 @@
   top: 0;
   height: 100%;
   width: 51%;
-  background: linear-gradient(160deg, hsl(340, 25%, 22%) 0%, hsl(340, 30%, 12%) 100%);
+  background: linear-gradient(160deg, hsl(20, 18%, 20%) 0%, hsl(20, 15%, 12%) 100%);
   z-index: 1;
 }
 
@@ -120,7 +120,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--sp-lg);
-  background: hsla(270, 30%, 3%, 0.92);
+  background: hsla(20, 12%, 3%, 0.92);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   opacity: 0;
@@ -176,16 +176,15 @@
 }
 
 .letter-modal__salutation {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-family: var(--font-handwritten);
+  font-size: 1.8rem;
   color: var(--text-accent);
   margin-bottom: var(--sp-lg);
 }
 
 .letter-modal__line {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.05rem;
+  font-family: var(--font-handwritten);
+  font-size: 1.2rem;
   color: var(--text-secondary);
   line-height: 1.9;
   opacity: 0;

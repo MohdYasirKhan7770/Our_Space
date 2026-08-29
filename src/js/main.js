@@ -8,9 +8,12 @@ import { initSongs } from './songs.js';
 import { initLetters } from './letters.js';
 import { initFuture } from './future.js';
 import { initSecrets } from './secrets.js';
+import { initCursor } from './cursor.js';
+import { initAmbient } from './ambient.js';
+import { initMap } from './map.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Wait for user to interact to start (hero CTA)
+  // Hero CTA smooth scroll
   const heroCta = document.getElementById('heroCta');
   if (heroCta) {
     heroCta.addEventListener('click', (e) => {
@@ -29,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initLetters();
   initFuture();
   initSecrets();
+  initCursor();
+  initAmbient();
+  initMap();
 
   // Populate dynamic text from CONFIG
   populateDynamicContent();
@@ -38,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup navigation
   setupNavigation();
+
+  // Setup future section sub-navigation
+  setupFutureNav();
 });
 
 function populateDynamicContent() {
@@ -85,7 +94,6 @@ function setupScrollReveals() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        // Stop observing once revealed
         observer.unobserve(entry.target);
       }
     });
@@ -95,7 +103,18 @@ function setupScrollReveals() {
     threshold: 0.15
   });
 
-  document.querySelectorAll('.reveal').forEach(el => {
+  document.querySelectorAll('.reveal').forEach((el, index) => {
+    // Add stagger delay for siblings within the same parent
+    const parent = el.parentElement;
+    if (parent) {
+      const siblings = parent.querySelectorAll(':scope > .reveal');
+      if (siblings.length > 1) {
+        const sibIndex = Array.from(siblings).indexOf(el);
+        if (sibIndex > 0) {
+          el.style.setProperty('--reveal-delay', `${sibIndex * 0.1}s`);
+        }
+      }
+    }
     observer.observe(el);
   });
 }
@@ -131,4 +150,24 @@ function setupNavigation() {
       });
     });
   }
+}
+
+function setupFutureNav() {
+  const navBtns = document.querySelectorAll('.future-nav__btn');
+  const sections = document.querySelectorAll('.future-section');
+
+  if (navBtns.length === 0) return;
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.section;
+
+      navBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      sections.forEach(s => {
+        s.classList.toggle('is-active', s.id === target);
+      });
+    });
+  });
 }

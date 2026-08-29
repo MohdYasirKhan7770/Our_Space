@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   SONGS (Our Songs)
+   SONGS (Our Songs) — Warm Palette
    ═══════════════════════════════════════════════════════════════ */
 
 .songs {
@@ -22,12 +22,14 @@
   border: 1px solid var(--bg-glass-border);
   border-radius: var(--radius-lg);
   transition: border-color var(--duration-normal) var(--ease-out),
-              box-shadow var(--duration-normal) var(--ease-out);
+              box-shadow var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
 }
 
 .song-card:hover {
   border-color: var(--bg-glass-border-hover);
   box-shadow: 0 8px 32px var(--glow-rose);
+  transform: translateY(-2px);
 }
 
 .song-card__cover {
@@ -55,7 +57,7 @@
 }
 
 .song-card__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--text-primary);
   margin-bottom: 0.15rem;

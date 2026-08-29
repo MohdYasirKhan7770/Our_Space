@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   REASONS I LOVE YOU
+   REASONS I LOVE YOU — Warm Palette + 3D Tilt
    ═══════════════════════════════════════════════════════════════ */
 
 .reasons {
@@ -40,9 +40,10 @@
 }
 
 .reasons__card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) rotateX(2deg) rotateY(-1deg);
   border-color: var(--bg-glass-border-hover);
-  box-shadow: 0 12px 48px var(--glow-rose);
+  box-shadow: 0 16px 48px var(--glow-rose),
+              0 4px 16px var(--glow-gold);
 }
 
 .reasons__number {

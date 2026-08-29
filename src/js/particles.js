@@ -5,9 +5,14 @@ export function initParticles() {
   const ctx = canvas.getContext('2d');
   let width, height;
   let particles = [];
-  
-  // We want to reuse the secret star tooltip from secrets.js, so we store a reference
-  // to the secret particle if one exists.
+  let scrollY = 0;
+
+  // Track scroll for parallax
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+  }, { passive: true });
+
+  // Secret star reference
   let secretParticle = null;
 
   function resize() {
@@ -15,23 +20,67 @@ export function initParticles() {
     height = canvas.height = window.innerHeight;
   }
 
+  // Draw a tiny heart shape
+  function drawHeart(x, y, size) {
+    ctx.beginPath();
+    const topCurveHeight = size * 0.3;
+    ctx.moveTo(x, y + topCurveHeight);
+    // Left bump
+    ctx.bezierCurveTo(
+      x, y,
+      x - size / 2, y,
+      x - size / 2, y + topCurveHeight
+    );
+    // Left bottom
+    ctx.bezierCurveTo(
+      x - size / 2, y + (size + topCurveHeight) / 2,
+      x, y + (size + topCurveHeight) / 1.2,
+      x, y + size
+    );
+    // Right bottom
+    ctx.bezierCurveTo(
+      x, y + (size + topCurveHeight) / 1.2,
+      x + size / 2, y + (size + topCurveHeight) / 2,
+      x + size / 2, y + topCurveHeight
+    );
+    // Right bump
+    ctx.bezierCurveTo(
+      x + size / 2, y,
+      x, y,
+      x, y + topCurveHeight
+    );
+    ctx.closePath();
+  }
+
   class Particle {
-    constructor(isSecret = false) {
+    constructor(type = 'bokeh') {
+      this.type = type; // 'bokeh', 'heart', 'secret'
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.size = Math.random() * 1.5 + 0.5;
-      this.speedY = Math.random() * 0.1 - 0.05;
-      this.speedX = Math.random() * 0.1 - 0.05;
-      this.opacity = Math.random();
-      this.fadeSpeed = Math.random() * 0.01 + 0.005;
+      this.baseY = this.y;
+      this.speedY = (Math.random() - 0.5) * 0.08;
+      this.speedX = (Math.random() - 0.5) * 0.06;
+      this.opacity = Math.random() * 0.6 + 0.1;
+      this.fadeSpeed = Math.random() * 0.008 + 0.003;
       this.fadeDir = Math.random() > 0.5 ? 1 : -1;
-      this.isSecret = isSecret;
-      
-      if (isSecret) {
+      this.parallaxFactor = 0.02 + Math.random() * 0.03;
+
+      if (type === 'heart') {
+        this.size = Math.random() * 5 + 3;
+        this.hue = 350 + Math.random() * 15 - 7; // rose tones
+        this.saturation = 35 + Math.random() * 20;
+        this.lightness = 55 + Math.random() * 15;
+        this.rotation = Math.random() * 0.4 - 0.2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.003;
+      } else if (type === 'secret') {
         this.size = 2.5;
-        this.color = 'hsl(345, 80%, 70%)'; // Distinctive rose color
+        this.isSecret = true;
       } else {
-        this.color = `hsla(${200 + Math.random() * 40}, 80%, 88%, `;
+        // Bokeh: soft warm circles
+        this.size = Math.random() * 2 + 0.5;
+        this.hue = 30 + Math.random() * 25; // warm amber/cream
+        this.saturation = 30 + Math.random() * 30;
+        this.lightness = 80 + Math.random() * 10;
       }
     }
 
@@ -39,44 +88,77 @@ export function initParticles() {
       this.y += this.speedY;
       this.x += this.speedX;
 
-      if (this.y < 0) this.y = height;
-      if (this.y > height) this.y = 0;
-      if (this.x < 0) this.x = width;
-      if (this.x > width) this.x = 0;
+      // Wrap edges
+      if (this.y < -10) this.y = height + 10;
+      if (this.y > height + 10) this.y = -10;
+      if (this.x < -10) this.x = width + 10;
+      if (this.x > width + 10) this.x = -10;
 
+      // Twinkle
       this.opacity += this.fadeSpeed * this.fadeDir;
-      if (this.opacity >= 1 || this.opacity <= 0.1) {
+      if (this.opacity >= 0.7 || this.opacity <= 0.05) {
         this.fadeDir *= -1;
+      }
+      this.opacity = Math.max(0.02, Math.min(0.7, this.opacity));
+
+      // Rotate hearts gently
+      if (this.type === 'heart') {
+        this.rotation += this.rotSpeed;
       }
     }
 
     draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      if (this.isSecret) {
-        ctx.fillStyle = `hsla(345, 80%, 70%, ${this.opacity})`;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = 'hsl(345, 80%, 70%)';
+      // Apply parallax offset
+      const parallaxY = scrollY * this.parallaxFactor;
+      const drawY = ((this.y - parallaxY) % (height + 20) + height + 20) % (height + 20) - 10;
+
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+
+      if (this.type === 'heart') {
+        ctx.translate(this.x, drawY);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+        drawHeart(0, -this.size / 2, this.size);
+        ctx.fill();
+      } else if (this.type === 'secret') {
+        ctx.beginPath();
+        ctx.arc(this.x, drawY, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(350, 60%, 70%)`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = 'hsl(350, 60%, 70%)';
+        ctx.fill();
       } else {
-        ctx.fillStyle = this.color + this.opacity + ')';
-        ctx.shadowBlur = 0;
+        // Bokeh circle with soft glow
+        ctx.beginPath();
+        ctx.arc(this.x, drawY, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, ${this.opacity})`;
+        ctx.shadowBlur = this.size * 3;
+        ctx.shadowColor = `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, 0.3)`;
+        ctx.fill();
       }
-      ctx.fill();
+
+      ctx.restore();
     }
   }
 
   function init() {
     resize();
     particles = [];
-    // Adjust number of particles based on screen width for performance
-    const numParticles = width < 768 ? 80 : 150;
-    
-    for (let i = 0; i < numParticles; i++) {
-      particles.push(new Particle());
+
+    const isMobile = width < 768;
+    const numBokeh = isMobile ? 50 : 100;
+    const numHearts = isMobile ? 8 : 18;
+
+    for (let i = 0; i < numBokeh; i++) {
+      particles.push(new Particle('bokeh'));
     }
-    
-    // Add one secret particle
-    secretParticle = new Particle(true);
+    for (let i = 0; i < numHearts; i++) {
+      particles.push(new Particle('heart'));
+    }
+
+    // One secret particle
+    secretParticle = new Particle('secret');
     particles.push(secretParticle);
   }
 
@@ -87,8 +169,8 @@ export function initParticles() {
       particles[i].update();
       particles[i].draw();
     }
-    
-    // Expose secret particle for secrets.js to track
+
+    // Expose for secrets.js
     window.SECRET_STAR = secretParticle;
 
     requestAnimationFrame(animate);
@@ -96,7 +178,7 @@ export function initParticles() {
 
   window.addEventListener('resize', () => {
     resize();
-    init(); // Reinitialize to distribute evenly
+    init();
   });
 
   init();
