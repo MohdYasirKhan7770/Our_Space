@@ -45,10 +45,10 @@ a world — even a small, digital one — that's entirely about you.`,
   // ─── Our Story (Timeline) ───────────────────────────────────
   timeline: [
     {
-      date: "March 2025",
-      title: "The Day We Met",
-      description: "There are ordinary days, and then there are the ones that quietly rewrite your story. The day we met was one of the latter — I just didn't know it yet.",
-      photo: "assets/images/image-2.jpeg",
+      date: "Jan 14, 2026",
+      title: "The day we started dating",
+      description: "There are ordinary days, and then there are the ones that quietly rewrite your story. The day we started dating was one of the latter.",
+      photo: "assets/images/pic1.jpeg",
       location: "",
       song: "",
     },
