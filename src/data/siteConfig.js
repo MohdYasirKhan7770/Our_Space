@@ -16,7 +16,7 @@ const CONFIG = {
 
   // ─── Relationship ────────────────────────────────────────────
   // Format: "YYYY-MM-DDTHH:mm:ss" — the counter starts from this moment
-  relationshipStart: "2025-03-15T00:00:00",
+  relationshipStart: "2026-01-14T00:00:00",
 
   // ─── SEO & Meta (keep vague for privacy — no real names by default) ──
   siteTitle: "Our Little Universe",
