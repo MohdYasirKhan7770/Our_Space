@@ -36,7 +36,7 @@ const CONFIG = {
 
   // ─── Our Universe (Home) ─────────────────────────────────────
   universe: {
-    photo: "assets/images/together.jpeg",
+    photo: "assets/images/universe-photo.jpeg",
     message: `Some people search their whole lives for what I found the day 
 I met you. This little corner of the internet exists because you deserve 
 a world — even a small, digital one — that's entirely about you.`,
