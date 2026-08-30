@@ -47,7 +47,7 @@ a world — even a small, digital one — that's entirely about you.`,
     {
       date: "Jan 14, 2026",
       title: "The day we started dating",
-      description: "You asked me if I loved you, but your eyes had already asked my heart. And without a second thought, it whispered the only answer it knew— yes, always you.",
+      description: "You asked me if I loved you, but your eyes had already asked my heart. And without a second thought, it whispered the only answer it knew... yes, always you.",
       photo: "assets/images/pic1.jpeg",
       location: "",
       song: "",
