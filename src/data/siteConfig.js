@@ -305,7 +305,7 @@ a world — even a small, digital one — that's entirely about you.`,
   // ─── Countdown ──────────────────────────────────────────────
   countdown: {
     label: "Until our next anniversary",
-    date: "2027-03-15T00:00:00",
+    date: "2027-01-14T00:00:00",
     emoji: "💕",
   },
 
@@ -313,7 +313,7 @@ a world — even a small, digital one — that's entirely about you.`,
   futureLetters: [
     {
       label: "Open on our 2nd anniversary",
-      unlockDate: "2027-03-15",
+      unlockDate: "2027-01-14",
       salutation: "To us, two years later,",
       lines: [
         "If you're reading this, we made it another year.",
@@ -328,7 +328,7 @@ a world — even a small, digital one — that's entirely about you.`,
     },
     {
       label: "Open on our 3rd anniversary",
-      unlockDate: "2028-03-15",
+      unlockDate: "2028-01-14",
       salutation: "My love, three years in,",
       lines: [
         "Three years.",
